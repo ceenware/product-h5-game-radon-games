@@ -30,6 +30,8 @@ jobs:
         run: corepack enable
 
       - name: Install dependencies
+        env:
+          PNPM_CONFIG_DANGEROUSLY_ALLOW_ALL_BUILDS: true
         run: pnpm install --frozen-lockfile
 
       - name: Build
