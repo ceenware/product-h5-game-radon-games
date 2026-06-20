@@ -3,6 +3,7 @@ import { Transparent } from "../assets/Transparent";
 import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion, Reorder } from "motion/react";
 import { useEffect, useState } from "react";
+import { sitePath } from "../util/sitePath";
 import {
   FiArrowLeft,
   FiArrowRight,
@@ -176,7 +177,7 @@ function RouteComponent() {
     >
       <div className="flex h-full w-16 flex-col border-r-2 border-bg-secondary bg-bg-primary transition-all sm:w-64">
         <div className="flex h-16 w-full items-center justify-center border-b-2 border-bg-secondary">
-          <a href="/">
+          <a href={sitePath("/")}>
             <Banner className="hidden h-6 sm:block" />
             <Transparent className="block h-6 sm:hidden" />
           </a>
@@ -332,4 +333,3 @@ function RouteComponent() {
     </motion.main>
   );
 }
-

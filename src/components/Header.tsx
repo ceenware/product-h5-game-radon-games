@@ -2,6 +2,7 @@ import { Transparent } from "../assets/Transparent";
 import { useMatch } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import type { IconType } from "react-icons/lib";
+import { sitePath } from "../util/sitePath";
 import {
   PiGameControllerBold,
   PiHouseBold,
@@ -28,10 +29,12 @@ function Link(props: {
   text?: string;
   label?: string;
 }) {
+  const href = props.href.startsWith("/") ? sitePath(props.href) : props.href;
+
   return (
     <motion.a
-      href={props.href}
-      target={/^(https?:)?\/\//.test(props.href) ? "_blank" : "_self"}
+      href={href}
+      target={/^(https?:)?\/\//.test(href) ? "_blank" : "_self"}
       variants={item}
       className="flex items-center gap-2 transition-colors hover:text-accent-primary"
       aria-label={props.label ?? props.text}
@@ -66,7 +69,7 @@ export function Header() {
       animate="visible"
     >
       <div className="flex gap-5">
-        <motion.a href="/" variants={item} aria-label="Home">
+        <motion.a href={sitePath("/")} variants={item} aria-label="Home">
           <Transparent className="h-6 w-auto" />
         </motion.a>
         <Link href="/" icon={PiHouseBold} text="Home" />
@@ -74,7 +77,7 @@ export function Header() {
         <Link href="/proxy" icon={PiDetectiveBold} text="Proxy" />
       </div>
       <div className="hidden gap-5 sm:flex">
-        <form method="GET" action="/search">
+        <form method="GET" action={sitePath("/search")}>
           <motion.input
             name="q"
             variants={item}

@@ -5,6 +5,7 @@ import { getStyle } from "../util/theme";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { AnimatePresence, motion } from "motion/react";
+import { sitePath } from "../util/sitePath";
 
 export const Route = createRootRoute({
   component: Index,
@@ -41,13 +42,13 @@ function NotFound() {
         Try returning{" "}
         <a
           className="underline transition-colors hover:text-accent-primary"
-          href="/"
+          href={sitePath("/")}
         >
           home
         </a>{" "}
         or searching games
       </p>
-      <form action="/search" method="GET">
+      <form action={sitePath("/search")} method="GET">
         <input
           name="q"
           className="rounded-md  border border-bg-secondary bg-transparent px-2 py-1 text-base font-normal shadow outline-accent-secondary ring-accent-primary transition-all focus:outline-0 focus:ring-2"

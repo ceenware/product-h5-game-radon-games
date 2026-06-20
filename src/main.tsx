@@ -6,10 +6,16 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
+import { routerBasePath, sitePath } from "./util/sitePath";
 
 const queryClient = new QueryClient();
+
 // Create a new router instance
-const router = createRouter({ routeTree, defaultPreload: "viewport" });
+const router = createRouter({
+  routeTree,
+  defaultPreload: "viewport",
+  basepath: routerBasePath
+});
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
@@ -36,23 +42,23 @@ declare global {
 
 const title = localStorage.getItem("title")?.trim() || "Radon Games";
 document.title = title;
-const icon = localStorage.getItem("icon")?.trim() || "/favicon.ico";
+const icon = localStorage.getItem("icon")?.trim() || sitePath("favicon.ico");
 document.querySelector('link[rel="icon"]')!.setAttribute("href", icon);
 
 if ("serviceWorker" in navigator) {
   if (window.scram) {
     navigator.serviceWorker
-      .register("/sw.js", {
-        scope: "/"
+      .register(sitePath("sw.js"), {
+        scope: sitePath("/")
       })
       .then(() => {
         console.log(`Registered SW`);
       });
     navigator.serviceWorker.ready.then(() => {
-      const connection = new BareMuxConnection("/baremux/worker.js");
+      const connection = new BareMuxConnection(sitePath("baremux/worker.js"));
       window.Connection = connection;
 
-      connection.setTransport("/libcurl/index.mjs", [
+      connection.setTransport(sitePath("libcurl/index.mjs"), [
         {
           wisp:
             location.protocol === "http:"
@@ -77,4 +83,3 @@ if (!rootElement.innerHTML) {
     </StrictMode>
   );
 }
-

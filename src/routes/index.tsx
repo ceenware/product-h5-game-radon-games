@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { PiMagnifyingGlassBold, PiDiceFiveBold } from "react-icons/pi";
+import { sitePath } from "../util/sitePath";
 
 export const Route = createFileRoute("/")({
   component: Home
@@ -13,7 +14,7 @@ export function Home() {
   const { data } = useQuery({
     queryKey: ["games"],
     queryFn: async () => {
-      return fetch("/games.json").then((res) => res.json());
+      return fetch(sitePath("games.json")).then((res) => res.json());
     }
   });
 
@@ -54,7 +55,7 @@ export function Home() {
         </p>
         <div className="flex gap-5">
           <motion.a
-            href="/games"
+            href={sitePath("/games")}
             className="flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-lg bg-bg-secondary px-4 py-2 font-semibold shadow-lg focus:outline-0"
             initial={{
               boxShadow: `0px 0px 0px ${bgSecondary}`
@@ -72,7 +73,7 @@ export function Home() {
             Browse Games
           </motion.a>
           <motion.a
-            href={`/game/${randomGame.id}`}
+            href={sitePath(`/game/${randomGame.id}`)}
             className="flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-lg bg-accent-secondary px-4 py-2 font-semibold shadow-lg focus:outline-0"
             initial={{
               boxShadow: `0px 0px 0px ${accentSecondary}`
@@ -111,4 +112,3 @@ export function Home() {
     </motion.main>
   );
 }
-
